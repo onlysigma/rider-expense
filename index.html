@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rider Expense Tracker | Supabase</title>
+    <title>Rider Expense Tracker | Office Wallet System</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -393,6 +393,16 @@
             background: rgba(255, 255, 255, 0.15);
         }
 
+        .btn-success {
+            background: linear-gradient(135deg, #4cc9f0, #4361ee);
+            color: white;
+        }
+
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(76, 201, 240, 0.3);
+        }
+
         .btn-danger {
             background: rgba(247, 37, 133, 0.1);
             color: var(--danger);
@@ -477,14 +487,22 @@
             color: #9d4edd;
         }
 
-        .type-office {
-            background: rgba(72, 149, 239, 0.15);
-            color: var(--primary-light);
+        .type-income {
+            background: rgba(76, 201, 240, 0.15);
+            color: var(--info);
         }
 
         .amount {
             font-weight: 600;
             color: var(--light);
+        }
+
+        .amount.income {
+            color: #4cc9f0;
+        }
+
+        .amount.expense {
+            color: #f72585;
         }
 
         /* Filter Section */
@@ -645,6 +663,87 @@
         ::-webkit-scrollbar-thumb:hover {
             background: var(--primary-light);
         }
+
+        /* Warning styles */
+        .warning-message {
+            background: rgba(247, 37, 133, 0.1);
+            border: 1px solid rgba(247, 37, 133, 0.3);
+            border-radius: 8px;
+            padding: 12px;
+            margin: 15px 0;
+            font-size: 14px;
+            color: var(--warning);
+        }
+
+        .success-message {
+            background: rgba(76, 201, 240, 0.1);
+            border: 1px solid rgba(76, 201, 240, 0.3);
+            border-radius: 8px;
+            padding: 12px;
+            margin: 15px 0;
+            font-size: 14px;
+            color: var(--success);
+        }
+        
+        /* Flow visualization */
+        .flow-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .flow-step {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            border: 1px solid var(--card-border);
+        }
+        
+        .flow-number {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        
+        .flow-content {
+            flex: 1;
+        }
+        
+        .flow-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .flow-description {
+            font-size: 14px;
+            color: var(--gray);
+        }
+        
+        .flow-arrow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+        }
+        
+        /* Balance status */
+        .balance-positive {
+            color: #4cc9f0;
+        }
+        
+        .balance-negative {
+            color: #f72585;
+        }
     </style>
 </head>
 <body>
@@ -658,7 +757,7 @@
                 </div>
                 <div class="logo-text">
                     <h1>Rider Expense Tracker</h1>
-                    <p>Track • Manage • Analyze</p>
+                    <p>Track • Manage • Office Wallet</p>
                 </div>
             </div>
             <div class="header-actions">
@@ -683,42 +782,80 @@
         <div class="tabs">
             <div class="tab active" data-tab="dashboard">Dashboard</div>
             <div class="tab" data-tab="rider-expenses">Rider Expenses</div>
-            <div class="tab" data-tab="office-expenses">Office Expenses</div>
+            <div class="tab" data-tab="office-wallet">Office Wallet</div>
         </div>
 
         <!-- Dashboard Tab -->
         <div class="tab-content active" id="dashboard">
+            <div class="flow-container">
+                <div class="flow-step">
+                    <div class="flow-number">1</div>
+                    <div class="flow-content">
+                        <div class="flow-title">Money Taken From Office</div>
+                        <div class="flow-description">Initial funds added to the office wallet</div>
+                    </div>
+                    <div class="flow-arrow">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M5 12h14"></path>
+                            <path d="m12 5 7 7-7 7"></path>
+                        </svg>
+                    </div>
+                </div>
+                
+                <div class="flow-step">
+                    <div class="flow-number">2</div>
+                    <div class="flow-content">
+                        <div class="flow-title">Expenses Paid From Office Wallet</div>
+                        <div class="flow-description">Expenses are deducted from the office wallet balance</div>
+                    </div>
+                    <div class="flow-arrow">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M5 12h14"></path>
+                            <path d="m12 5 7 7-7 7"></path>
+                        </svg>
+                    </div>
+                </div>
+                
+                <div class="flow-step">
+                    <div class="flow-number">3</div>
+                    <div class="flow-content">
+                        <div class="flow-title">Personal Expenses When Office Wallet is Empty</div>
+                        <div class="flow-description">If office wallet balance is insufficient, expenses are paid from personal funds</div>
+                    </div>
+                </div>
+            </div>
+
             <div class="dashboard-stats">
                 <div class="dashboard-stat dashboard-stat-total">
                     <div class="dashboard-stat-header">
-                        <div class="dashboard-stat-title">Total Expenses</div>
+                        <div class="dashboard-stat-title">Office Wallet Balance</div>
                     </div>
-                    <div class="dashboard-stat-value" id="dashboardTotalAmount">0 PKR</div>
+                    <div class="dashboard-stat-value" id="walletBalance">0 PKR</div>
                     <div class="dashboard-stat-details">
-                        <span>Rider: <span id="dashboardRiderAmount">0 PKR</span></span>
-                        <span>Office: <span id="dashboardOfficeAmount">0 PKR</span></span>
+                        <span>Total Income: <span id="totalIncome">0 PKR</span></span>
+                        <span>Total Expenses: <span id="totalExpenses">0 PKR</span></span>
                     </div>
                 </div>
                 
                 <div class="dashboard-stat dashboard-stat-rider">
                     <div class="dashboard-stat-header">
-                        <div class="dashboard-stat-title">Today's Expenses</div>
+                        <div class="dashboard-stat-title">Today's Rider Expenses</div>
                     </div>
                     <div class="dashboard-stat-value" id="dashboardTodayAmount">0 PKR</div>
                     <div class="dashboard-stat-details">
-                        <span>Rider: <span id="dashboardTodayRider">0 PKR</span></span>
-                        <span>Office: <span id="dashboardTodayOffice">0 PKR</span></span>
+                        <span>From Wallet: <span id="dashboardTodayWallet">0 PKR</span></span>
+                        <span>Personal: <span id="dashboardTodayPersonal">0 PKR</span></span>
                     </div>
                 </div>
                 
                 <div class="dashboard-stat dashboard-stat-office">
                     <div class="dashboard-stat-header">
-                        <div class="dashboard-stat-title">This Month</div>
+                        <div class="dashboard-stat-title">This Month Rider Expenses</div>
                     </div>
                     <div class="dashboard-stat-value" id="dashboardMonthAmount">0 PKR</div>
                     <div class="dashboard-stat-details">
-                        <span>Rider: <span id="dashboardMonthRider">0 PKR</span></span>
-                        <span>Office: <span id="dashboardMonthOffice">0 PKR</span></span>
+                        <span>From Wallet: <span id="dashboardMonthWallet">0 PKR</span></span>
+                        <span>Personal: <span id="dashboardMonthPersonal">0 PKR</span></span>
                     </div>
                 </div>
                 
@@ -728,8 +865,8 @@
                     </div>
                     <div class="dashboard-stat-value" id="dashboardTotalRecords">0</div>
                     <div class="dashboard-stat-details">
-                        <span>Rider: <span id="dashboardRiderRecords">0</span></span>
-                        <span>Office: <span id="dashboardOfficeRecords">0</span></span>
+                        <span>Rider Expenses: <span id="dashboardRiderRecords">0</span></span>
+                        <span>Wallet Entries: <span id="dashboardWalletRecords">0</span></span>
                     </div>
                 </div>
             </div>
@@ -754,10 +891,10 @@
                             <thead>
                                 <tr>
                                     <th>Date</th>
-                                    <th>Type</th>
                                     <th>Rider</th>
                                     <th>Category</th>
                                     <th>Amount</th>
+                                    <th>Source</th>
                                     <th>Notes</th>
                                 </tr>
                             </thead>
@@ -795,12 +932,12 @@
                             Add Rider Expense
                         </button>
                         
-                        <button class="btn btn-secondary" onclick="switchToTab('office-expenses')">
+                        <button class="btn btn-success" onclick="switchToTab('office-wallet')">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <line x1="12" y1="5" x2="12" y2="19"></line>
                                 <line x1="5" y1="12" x2="19" y2="12"></line>
                             </svg>
-                            Add Office Expense
+                            Add Money to Wallet
                         </button>
                         
                         <button class="btn btn-secondary" id="refreshDashboard">
@@ -824,19 +961,27 @@
                         
                         <div style="display: flex; flex-direction: column; gap: 12px;">
                             <div style="display: flex; justify-content: space-between; align-items: center;">
-                                <span>Rider Expenses</span>
-                                <span id="riderPercentage">0%</span>
+                                <span>Fuel</span>
+                                <span id="fuelPercentage">0%</span>
                             </div>
                             <div style="height: 8px; background: rgba(255,255,255,0.1); border-radius: 4px; overflow: hidden;">
-                                <div id="riderBar" style="height: 100%; background: var(--primary); width: 0%; transition: width 0.5s ease;"></div>
+                                <div id="fuelBar" style="height: 100%; background: var(--primary); width: 0%; transition: width 0.5s ease;"></div>
                             </div>
                             
                             <div style="display: flex; justify-content: space-between; align-items: center;">
-                                <span>Office Expenses</span>
-                                <span id="officePercentage">0%</span>
+                                <span>Lunch</span>
+                                <span id="lunchPercentage">0%</span>
                             </div>
                             <div style="height: 8px; background: rgba(255,255,255,0.1); border-radius: 4px; overflow: hidden;">
-                                <div id="officeBar" style="height: 100%; background: var(--primary-light); width: 0%; transition: width 0.5s ease;"></div>
+                                <div id="lunchBar" style="height: 100%; background: var(--info); width: 0%; transition: width 0.5s ease;"></div>
+                            </div>
+                            
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <span>Other</span>
+                                <span id="otherPercentage">0%</span>
+                            </div>
+                            <div style="height: 8px; background: rgba(255,255,255,0.1); border-radius: 4px; overflow: hidden;">
+                                <div id="otherBar" style="height: 100%; background: var(--warning); width: 0%; transition: width 0.5s ease;"></div>
                             </div>
                         </div>
                     </div>
@@ -924,6 +1069,7 @@
                                     <th class="mobile-hidden">Rider</th>
                                     <th>Type</th>
                                     <th>Amount</th>
+                                    <th>Source</th>
                                     <th class="mobile-hidden">Notes</th>
                                     <th>Actions</th>
                                 </tr>
@@ -953,6 +1099,14 @@
                         </div>
                     </div>
                     
+                    <div id="walletWarning" class="warning-message" style="display: none;">
+                        <strong>Low Balance!</strong> Office wallet has insufficient funds. This expense will be recorded as personal.
+                    </div>
+                    
+                    <div id="walletSuccess" class="success-message" style="display: none;">
+                        <strong>Success!</strong> Expense will be deducted from office wallet.
+                    </div>
+                    
                     <div class="form-group">
                         <label>Date</label>
                         <input type="date" id="date">
@@ -972,7 +1126,15 @@
                     </div>
                     <div class="form-group">
                         <label>Amount (PKR)</label>
-                        <input type="number" id="amount" value="0" min="0" step="0.01">
+                        <input type="number" id="amount" value="0" min="0" step="0.01" onchange="checkWalletBalance()">
+                    </div>
+                    <div class="form-group">
+                        <label>Payment Source</label>
+                        <select id="paymentSource">
+                            <option value="auto">Auto (Use Wallet if Available)</option>
+                            <option value="wallet">Office Wallet</option>
+                            <option value="personal">Personal Money</option>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label>Notes</label>
@@ -997,8 +1159,8 @@
             </div>
         </div>
 
-        <!-- Office Expenses Tab -->
-        <div class="tab-content" id="office-expenses">
+        <!-- Office Wallet Tab -->
+        <div class="tab-content" id="office-wallet">
             <div class="grid">
                 <!-- Left: Table Section -->
                 <div class="card">
@@ -1011,9 +1173,9 @@
                                 <line x1="9" y1="3" x2="9" y2="21"></line>
                                 <line x1="15" y1="3" x2="15" y2="21"></line>
                             </svg>
-                            Office Expense History
+                            Office Wallet History
                         </div>
-                        <button class="btn btn-secondary btn-sm" id="refreshOfficeData">
+                        <button class="btn btn-secondary btn-sm" id="refreshWalletData">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M23 4v6h-6"></path>
                                 <path d="M1 20v-6h6"></path>
@@ -1028,37 +1190,31 @@
                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
                             </svg>
-                            Filter Expenses
+                            Filter Wallet Entries
                         </div>
                         <div class="filters">
                             <div class="filter-group">
                                 <div class="filter-label">Date</div>
-                                <input type="date" id="filterOfficeDate">
-                            </div>
-                            <div class="filter-group">
-                                <div class="filter-label">Rider</div>
-                                <select id="filterOfficeRider">
-                                    <option value="">All Riders</option>
-                                </select>
+                                <input type="date" id="filterWalletDate">
                             </div>
                             <div class="filter-group">
                                 <div class="filter-label">Type</div>
-                                <select id="filterOfficeType">
+                                <select id="filterWalletType">
                                     <option value="">All Types</option>
-                                    <option value="Office">Office</option>
-                                    <option value="Other">Other</option>
+                                    <option value="Income">Income</option>
+                                    <option value="Expense">Expense</option>
                                 </select>
                             </div>
                         </div>
                         <div class="filter-actions">
-                            <button class="btn btn-secondary" id="clearOfficeFilters">
+                            <button class="btn btn-secondary" id="clearWalletFilters">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <path d="M3 6h18"></path>
                                     <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
                                 </svg>
                                 Clear Filters
                             </button>
-                            <button class="btn btn-primary" id="applyOfficeFilters">
+                            <button class="btn btn-primary" id="applyWalletFilters">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
                                 </svg>
@@ -1072,23 +1228,22 @@
                             <thead>
                                 <tr>
                                     <th>Date</th>
-                                    <th class="mobile-hidden">Rider</th>
                                     <th>Type</th>
                                     <th>Amount</th>
-                                    <th class="mobile-hidden">Notes</th>
+                                    <th class="mobile-hidden">Description</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
-                            <tbody id="officeTbody"></tbody>
+                            <tbody id="walletTbody"></tbody>
                         </table>
                     </div>
                     
-                    <div id="officeEmptyState" class="empty-state" style="display: none;">
+                    <div id="walletEmptyState" class="empty-state" style="display: none;">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                         </svg>
-                        <h3>No office expenses found</h3>
-                        <p>Add your first office expense using the form on the right</p>
+                        <h3>No wallet entries found</h3>
+                        <p>Add your first wallet entry using the form on the right</p>
                     </div>
                 </div>
 
@@ -1100,42 +1255,38 @@
                                 <line x1="12" y1="5" x2="12" y2="19"></line>
                                 <line x1="5" y1="12" x2="19" y2="12"></line>
                             </svg>
-                            Add Office Expense
+                            Add Money to Wallet
                         </div>
                     </div>
                     
                     <div class="form-group">
                         <label>Date</label>
-                        <input type="date" id="officeDate">
+                        <input type="date" id="walletDate">
                     </div>
                     <div class="form-group">
-                        <label>Rider</label>
-                        <input type="text" id="officeRider" placeholder="Rider name" value="Manahil">
-                    </div>
-                    <div class="form-group">
-                        <label>Expense Type</label>
-                        <select id="officeCategory">
-                            <option value="Office">Office</option>
-                            <option value="Other">Other</option>
+                        <label>Entry Type</label>
+                        <select id="walletType">
+                            <option value="Income">Add Money</option>
+                            <option value="Expense">Withdraw Money</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label>Amount (PKR)</label>
-                        <input type="number" id="officeAmount" value="0" min="0" step="0.01">
+                        <input type="number" id="walletAmount" value="0" min="0" step="0.01">
                     </div>
                     <div class="form-group">
-                        <label>Notes</label>
-                        <textarea id="officeNotes" placeholder="Optional notes..." rows="3"></textarea>
+                        <label>Description</label>
+                        <textarea id="walletDescription" placeholder="Description of the transaction..." rows="3"></textarea>
                     </div>
                     <div style="display:flex; gap:10px; margin-top:20px">
-                        <button class="btn btn-primary" id="addOfficeBtn" style="flex: 1;">
+                        <button class="btn btn-success" id="addWalletBtn" style="flex: 1;">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <line x1="12" y1="5" x2="12" y2="19"></line>
                                 <line x1="5" y1="12" x2="19" y2="12"></line>
                             </svg>
-                            Add Expense
+                            Add Entry
                         </button>
-                        <button class="btn btn-secondary" id="resetOfficeBtn">
+                        <button class="btn btn-secondary" id="resetWalletBtn">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
                                 <path d="M3 3v5h5"></path>
@@ -1156,9 +1307,12 @@
         const SUPABASE_URL = "https://xzypzkjqjcabioedvmzr.supabase.co";
         const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh6eXB6a2pxamNhYmlvZWR2bXpyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTMxOTYzOTcsImV4cCI6MjA2ODc3MjM5N30.5Ic571hDQ8iYDfnKg9WCxLTX7VUoLwXxQ967PrRYYW4";
         const RIDER_TABLE = "rider_expenses";
-        const OFFICE_TABLE = "office_expenses";
+        const WALLET_TABLE = "office_wallet";
 
         const client = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        // Global variables
+        let currentWalletBalance = 0;
 
         // Tab switching functionality
         function switchToTab(tabId) {
@@ -1183,7 +1337,7 @@
             const day = String(today.getDate()).padStart(2, '0');
             const todayFormatted = `${year}-${month}-${day}`;
             document.getElementById('date').value = todayFormatted;
-            document.getElementById('officeDate').value = todayFormatted;
+            document.getElementById('walletDate').value = todayFormatted;
         }
 
         // Format date for display
@@ -1203,9 +1357,63 @@
                 case 'Lunch': return 'type-lunch';
                 case 'Other': return 'type-other';
                 case 'Misc': return 'type-misc';
-                case 'Office': return 'type-office';
+                case 'Income': return 'type-income';
                 default: return 'type-other';
             }
+        }
+
+        // Check wallet balance before adding expense
+        async function checkWalletBalance() {
+            const amount = parseFloat(document.getElementById('amount').value) || 0;
+            const paymentSource = document.getElementById('paymentSource').value;
+            
+            if ((paymentSource === 'wallet' || paymentSource === 'auto') && amount > 0) {
+                await fetchWalletBalance();
+                const warningDiv = document.getElementById('walletWarning');
+                const successDiv = document.getElementById('walletSuccess');
+                
+                if (paymentSource === 'auto') {
+                    if (amount > currentWalletBalance) {
+                        warningDiv.style.display = 'block';
+                        successDiv.style.display = 'none';
+                    } else {
+                        warningDiv.style.display = 'none';
+                        successDiv.style.display = 'block';
+                    }
+                } else if (paymentSource === 'wallet' && amount > currentWalletBalance) {
+                    warningDiv.style.display = 'block';
+                    successDiv.style.display = 'none';
+                } else {
+                    warningDiv.style.display = 'none';
+                    successDiv.style.display = 'block';
+                }
+            } else {
+                document.getElementById('walletWarning').style.display = 'none';
+                document.getElementById('walletSuccess').style.display = 'none';
+            }
+        }
+
+        // Get current wallet balance
+        async function fetchWalletBalance() {
+            const { data, error } = await client.from(WALLET_TABLE).select("*");
+            if (error) {
+                console.error("Error fetching wallet:", error);
+                return 0;
+            }
+            
+            let totalIncome = 0;
+            let totalExpenses = 0;
+            
+            data.forEach(entry => {
+                if (entry.type === 'Income') {
+                    totalIncome += entry.amount;
+                } else {
+                    totalExpenses += entry.amount;
+                }
+            });
+            
+            currentWalletBalance = totalIncome - totalExpenses;
+            return currentWalletBalance;
         }
 
         // ========== DASHBOARD ==========
@@ -1214,44 +1422,61 @@
         const refreshDashboard = document.getElementById('refreshDashboard');
 
         async function fetchDashboardData() {
-            // Fetch both rider and office expenses
-            const [riderData, officeData] = await Promise.all([
+            // Fetch both rider and wallet data
+            const [riderData, walletData] = await Promise.all([
                 client.from(RIDER_TABLE).select("*").order('date', {ascending: false}).limit(10),
-                client.from(OFFICE_TABLE).select("*").order('date', {ascending: false}).limit(10)
+                client.from(WALLET_TABLE).select("*").order('date', {ascending: false})
             ]);
             
             const riderExpenses = riderData.data || [];
-            const officeExpenses = officeData.data || [];
+            const walletEntries = walletData.data || [];
             
-            updateDashboardStats(riderExpenses, officeExpenses);
-            renderDashboardData(riderExpenses, officeExpenses);
+            updateDashboardStats(riderExpenses, walletEntries);
+            renderDashboardData(riderExpenses);
+            updateExpenseDistribution(riderExpenses);
         }
 
-        function updateDashboardStats(riderRows, officeRows) {
-            // Calculate totals
-            const riderTotal = riderRows.reduce((sum, row) => sum + row.amount, 0);
-            const officeTotal = officeRows.reduce((sum, row) => sum + row.amount, 0);
-            const totalAmount = riderTotal + officeTotal;
+        function updateDashboardStats(riderRows, walletRows) {
+            // Calculate wallet balance
+            let totalIncome = 0;
+            let totalExpenses = 0;
             
-            // Update total amounts
-            document.getElementById('dashboardTotalAmount').textContent = `${totalAmount.toFixed(2)} PKR`;
-            document.getElementById('dashboardRiderAmount').textContent = `${riderTotal.toFixed(2)} PKR`;
-            document.getElementById('dashboardOfficeAmount').textContent = `${officeTotal.toFixed(2)} PKR`;
+            walletRows.forEach(entry => {
+                if (entry.type === 'Income') {
+                    totalIncome += entry.amount;
+                } else {
+                    totalExpenses += entry.amount;
+                }
+            });
             
-            // Update record counts
-            document.getElementById('dashboardTotalRecords').textContent = riderRows.length + officeRows.length;
-            document.getElementById('dashboardRiderRecords').textContent = riderRows.length;
-            document.getElementById('dashboardOfficeRecords').textContent = officeRows.length;
+            const walletBalance = totalIncome - totalExpenses;
+            currentWalletBalance = walletBalance;
+            
+            // Update wallet stats
+            const walletBalanceElement = document.getElementById('walletBalance');
+            walletBalanceElement.textContent = `${walletBalance.toFixed(2)} PKR`;
+            
+            if (walletBalance >= 0) {
+                walletBalanceElement.className = "dashboard-stat-value balance-positive";
+            } else {
+                walletBalanceElement.className = "dashboard-stat-value balance-negative";
+            }
+            
+            document.getElementById('totalIncome').textContent = `${totalIncome.toFixed(2)} PKR`;
+            document.getElementById('totalExpenses').textContent = `${totalExpenses.toFixed(2)} PKR`;
             
             // Calculate today's expenses
             const today = new Date().toISOString().split('T')[0];
-            const todayRider = riderRows.filter(row => row.date === today).reduce((sum, row) => sum + row.amount, 0);
-            const todayOffice = officeRows.filter(row => row.date === today).reduce((sum, row) => sum + row.amount, 0);
-            const todayTotal = todayRider + todayOffice;
+            const todayRider = riderRows.filter(row => row.date === today);
+            const todayAmount = todayRider.reduce((sum, row) => sum + row.amount, 0);
+            const todayWalletAmount = todayRider
+                .filter(row => row.payment_source === 'wallet')
+                .reduce((sum, row) => sum + row.amount, 0);
+            const todayPersonalAmount = todayAmount - todayWalletAmount;
             
-            document.getElementById('dashboardTodayAmount').textContent = `${todayTotal.toFixed(2)} PKR`;
-            document.getElementById('dashboardTodayRider').textContent = `${todayRider.toFixed(2)} PKR`;
-            document.getElementById('dashboardTodayOffice').textContent = `${todayOffice.toFixed(2)} PKR`;
+            document.getElementById('dashboardTodayAmount').textContent = `${todayAmount.toFixed(2)} PKR`;
+            document.getElementById('dashboardTodayWallet').textContent = `${todayWalletAmount.toFixed(2)} PKR`;
+            document.getElementById('dashboardTodayPersonal').textContent = `${todayPersonalAmount.toFixed(2)} PKR`;
             
             // Calculate this month's expenses
             const currentMonth = new Date().getMonth();
@@ -1260,38 +1485,56 @@
             const monthRider = riderRows.filter(row => {
                 const rowDate = new Date(row.date);
                 return rowDate.getMonth() === currentMonth && rowDate.getFullYear() === currentYear;
-            }).reduce((sum, row) => sum + row.amount, 0);
+            });
             
-            const monthOffice = officeRows.filter(row => {
-                const rowDate = new Date(row.date);
-                return rowDate.getMonth() === currentMonth && rowDate.getFullYear() === currentYear;
-            }).reduce((sum, row) => sum + row.amount, 0);
+            const monthAmount = monthRider.reduce((sum, row) => sum + row.amount, 0);
+            const monthWalletAmount = monthRider
+                .filter(row => row.payment_source === 'wallet')
+                .reduce((sum, row) => sum + row.amount, 0);
+            const monthPersonalAmount = monthAmount - monthWalletAmount;
             
-            const monthTotal = monthRider + monthOffice;
+            document.getElementById('dashboardMonthAmount').textContent = `${monthAmount.toFixed(2)} PKR`;
+            document.getElementById('dashboardMonthWallet').textContent = `${monthWalletAmount.toFixed(2)} PKR`;
+            document.getElementById('dashboardMonthPersonal').textContent = `${monthPersonalAmount.toFixed(2)} PKR`;
             
-            document.getElementById('dashboardMonthAmount').textContent = `${monthTotal.toFixed(2)} PKR`;
-            document.getElementById('dashboardMonthRider').textContent = `${monthRider.toFixed(2)} PKR`;
-            document.getElementById('dashboardMonthOffice').textContent = `${monthOffice.toFixed(2)} PKR`;
+            // Update record counts
+            document.getElementById('dashboardTotalRecords').textContent = riderRows.length + walletRows.length;
+            document.getElementById('dashboardRiderRecords').textContent = riderRows.length;
+            document.getElementById('dashboardWalletRecords').textContent = walletRows.length;
+        }
+
+        function updateExpenseDistribution(riderRows) {
+            // Calculate expense distribution by category
+            const categories = {
+                'Fuel': 0,
+                'Lunch': 0,
+                'Other': 0,
+                'Misc': 0
+            };
             
-            // Update expense distribution
-            if (totalAmount > 0) {
-                const riderPercentage = Math.round((riderTotal / totalAmount) * 100);
-                const officePercentage = Math.round((officeTotal / totalAmount) * 100);
+            riderRows.forEach(row => {
+                if (categories.hasOwnProperty(row.category)) {
+                    categories[row.category] += row.amount;
+                }
+            });
+            
+            const totalExpenses = Object.values(categories).reduce((sum, amount) => sum + amount, 0);
+            
+            if (totalExpenses > 0) {
+                document.getElementById('fuelPercentage').textContent = `${Math.round((categories.Fuel / totalExpenses) * 100)}%`;
+                document.getElementById('lunchPercentage').textContent = `${Math.round((categories.Lunch / totalExpenses) * 100)}%`;
+                document.getElementById('otherPercentage').textContent = `${Math.round((categories.Other / totalExpenses) * 100)}%`;
                 
-                document.getElementById('riderPercentage').textContent = `${riderPercentage}%`;
-                document.getElementById('officePercentage').textContent = `${officePercentage}%`;
-                
-                document.getElementById('riderBar').style.width = `${riderPercentage}%`;
-                document.getElementById('officeBar').style.width = `${officePercentage}%`;
+                document.getElementById('fuelBar').style.width = `${(categories.Fuel / totalExpenses) * 100}%`;
+                document.getElementById('lunchBar').style.width = `${(categories.Lunch / totalExpenses) * 100}%`;
+                document.getElementById('otherBar').style.width = `${(categories.Other / totalExpenses) * 100}%`;
             }
         }
 
-        function renderDashboardData(riderRows, officeRows) {
-            const allRows = [...riderRows, ...officeRows]
-                .sort((a, b) => new Date(b.date) - new Date(a.date))
-                .slice(0, 10);
+        function renderDashboardData(riderRows) {
+            const recentRows = riderRows.slice(0, 10);
             
-            if (allRows.length === 0) {
+            if (recentRows.length === 0) {
                 dashboardTbody.innerHTML = '';
                 dashboardEmptyState.style.display = 'block';
                 return;
@@ -1300,15 +1543,15 @@
             dashboardEmptyState.style.display = 'none';
             dashboardTbody.innerHTML = "";
             
-            allRows.forEach(r => {
+            recentRows.forEach(r => {
                 const tr = document.createElement("tr");
                 tr.classList.add("fade-in");
                 tr.innerHTML = `
                     <td>${formatDate(r.date)}</td>
-                    <td>${r.table === RIDER_TABLE ? 'Rider' : 'Office'}</td>
                     <td>${r.rider}</td>
                     <td><span class="expense-type ${getCategoryClass(r.category)}">${r.category}</span></td>
                     <td class="amount">${r.amount.toFixed(2)} PKR</td>
+                    <td>${r.payment_source === 'wallet' ? 'Office Wallet' : 'Personal'}</td>
                     <td>${r.notes || ''}</td>
                 `;
                 dashboardTbody.appendChild(tr);
@@ -1326,6 +1569,7 @@
         const clearFilters = document.getElementById('clearFilters');
         const applyFilters = document.getElementById('applyFilters');
         const refreshData = document.getElementById('refreshData');
+        const paymentSource = document.getElementById('paymentSource');
 
         async function fetchRiderRows(){
             let query = client.from(RIDER_TABLE).select("*");
@@ -1380,6 +1624,7 @@
                     <td class="mobile-hidden">${r.rider}</td>
                     <td><span class="expense-type ${getCategoryClass(r.category)}">${r.category}</span></td>
                     <td class="amount">${r.amount.toFixed(2)} PKR</td>
+                    <td>${r.payment_source === 'wallet' ? 'Office Wallet' : 'Personal'}</td>
                     <td class="mobile-hidden">${r.notes || ''}</td>
                     <td class="actions">
                         <button class="btn btn-secondary btn-sm" onclick="editRiderRow(${r.id})" title="Edit">
@@ -1401,17 +1646,43 @@
         }
 
         async function addRiderRow(){
+            const amount = parseFloat(document.getElementById('amount').value || 0);
+            let paymentSourceValue = document.getElementById('paymentSource').value;
+            
+            // Auto mode: use wallet if available, otherwise use personal
+            if (paymentSourceValue === 'auto') {
+                await fetchWalletBalance();
+                paymentSourceValue = amount <= currentWalletBalance ? 'wallet' : 'personal';
+            }
+            
             const payload = {
                 date: document.getElementById('date').value,
                 rider: document.getElementById('rider').value.trim(),
                 category: document.getElementById('category').value,
-                amount: parseFloat(document.getElementById('amount').value || 0),
+                amount: amount,
+                payment_source: paymentSourceValue,
                 notes: document.getElementById('notes').value.trim() || null
             };
             
             if(!payload.date || !payload.rider){ 
                 alert("Please fill date & rider."); 
                 return; 
+            }
+            
+            // If payment is from wallet, also add a wallet expense entry
+            if (paymentSourceValue === 'wallet') {
+                const walletPayload = {
+                    date: payload.date,
+                    type: 'Expense',
+                    amount: payload.amount,
+                    description: `Rider Expense: ${payload.rider} - ${payload.category}`
+                };
+                
+                const { error: walletError } = await client.from(WALLET_TABLE).insert(walletPayload);
+                if (walletError) {
+                    alert("Wallet error: " + walletError.message);
+                    return;
+                }
             }
             
             const {error} = await client.from(RIDER_TABLE).insert(payload);
@@ -1429,7 +1700,10 @@
             document.getElementById('rider').value = "Manahil";
             document.getElementById('category').value = "Fuel";
             document.getElementById('amount').value = "0";
+            document.getElementById('paymentSource').value = "auto";
             document.getElementById('notes').value = "";
+            document.getElementById('walletWarning').style.display = 'none';
+            document.getElementById('walletSuccess').style.display = 'none';
             
             // Reset button state if editing
             addBtn.innerHTML = `
@@ -1445,8 +1719,24 @@
         async function deleteRiderRow(id){
             if(!confirm("Are you sure you want to delete this expense?")) return;
             
+            // First get the expense details to check if it was from wallet
+            const { data: expenseData } = await client.from(RIDER_TABLE).select("*").eq('id', id).single();
+            
             const {error} = await client.from(RIDER_TABLE).delete().eq('id', id);
-            if(error) alert(error.message);
+            if(error) {
+                alert(error.message);
+                return;
+            }
+            
+            // If expense was from wallet, also remove the wallet entry
+            if (expenseData && expenseData.payment_source === 'wallet') {
+                await client.from(WALLET_TABLE)
+                    .delete()
+                    .eq('date', expenseData.date)
+                    .eq('type', 'Expense')
+                    .eq('amount', expenseData.amount)
+                    .eq('description', `Rider Expense: ${expenseData.rider} - ${expenseData.category}`);
+            }
             
             fetchRiderRows();
         }
@@ -1460,6 +1750,7 @@
             document.getElementById('rider').value = data.rider;
             document.getElementById('category').value = data.category;
             document.getElementById('amount').value = data.amount;
+            document.getElementById('paymentSource').value = data.payment_source;
             document.getElementById('notes').value = data.notes || '';
             
             addBtn.innerHTML = `
@@ -1478,6 +1769,7 @@
                 rider: document.getElementById('rider').value,
                 category: document.getElementById('category').value,
                 amount: parseFloat(document.getElementById('amount').value || 0),
+                payment_source: document.getElementById('paymentSource').value,
                 notes: document.getElementById('notes').value || null
             };
             
@@ -1488,80 +1780,62 @@
             fetchRiderRows();
         }
 
-        // ========== OFFICE EXPENSES ==========
-        const officeTbody = document.getElementById('officeTbody');
-        const addOfficeBtn = document.getElementById('addOfficeBtn');
-        const resetOfficeBtn = document.getElementById('resetOfficeBtn');
-        const officeEmptyState = document.getElementById('officeEmptyState');
-        const filterOfficeDate = document.getElementById('filterOfficeDate');
-        const filterOfficeRider = document.getElementById('filterOfficeRider');
-        const filterOfficeType = document.getElementById('filterOfficeType');
-        const clearOfficeFilters = document.getElementById('clearOfficeFilters');
-        const applyOfficeFilters = document.getElementById('applyOfficeFilters');
-        const refreshOfficeData = document.getElementById('refreshOfficeData');
+        // ========== OFFICE WALLET ==========
+        const walletTbody = document.getElementById('walletTbody');
+        const addWalletBtn = document.getElementById('addWalletBtn');
+        const resetWalletBtn = document.getElementById('resetWalletBtn');
+        const walletEmptyState = document.getElementById('walletEmptyState');
+        const filterWalletDate = document.getElementById('filterWalletDate');
+        const filterWalletType = document.getElementById('filterWalletType');
+        const clearWalletFilters = document.getElementById('clearWalletFilters');
+        const applyWalletFilters = document.getElementById('applyWalletFilters');
+        const refreshWalletData = document.getElementById('refreshWalletData');
 
-        async function fetchOfficeRows(){
-            let query = client.from(OFFICE_TABLE).select("*");
+        async function fetchWalletRows(){
+            let query = client.from(WALLET_TABLE).select("*");
             
             // Apply filters
-            if (filterOfficeDate.value) {
-                query = query.eq('date', filterOfficeDate.value);
+            if (filterWalletDate.value) {
+                query = query.eq('date', filterWalletDate.value);
             }
             
-            if (filterOfficeRider.value) {
-                query = query.eq('rider', filterOfficeRider.value);
-            }
-            
-            if (filterOfficeType.value) {
-                query = query.eq('category', filterOfficeType.value);
+            if (filterWalletType.value) {
+                query = query.eq('type', filterWalletType.value);
             }
             
             const {data, error} = await query.order('date', {ascending: false});
             if(error){console.error(error); return;}
             
-            renderOfficeData(data);
-            updateOfficeFilter(data);
-            fetchDashboardData(); // Update dashboard when office data changes
+            renderWalletData(data);
+            fetchDashboardData(); // Update dashboard when wallet data changes
         }
 
-        function updateOfficeFilter(rows) {
-            const riders = [...new Set(rows.map(row => row.rider))];
-            filterOfficeRider.innerHTML = '<option value="">All Riders</option>';
-            riders.forEach(rider => {
-                const option = document.createElement('option');
-                option.value = rider;
-                option.textContent = rider;
-                filterOfficeRider.appendChild(option);
-            });
-        }
-
-        function renderOfficeData(rows){
+        function renderWalletData(rows){
             if (rows.length === 0) {
-                officeTbody.innerHTML = '';
-                officeEmptyState.style.display = 'block';
+                walletTbody.innerHTML = '';
+                walletEmptyState.style.display = 'block';
                 return;
             }
             
-            officeEmptyState.style.display = 'none';
-            officeTbody.innerHTML = "";
+            walletEmptyState.style.display = 'none';
+            walletTbody.innerHTML = "";
             
             rows.forEach(r => {
                 const tr = document.createElement("tr");
                 tr.classList.add("fade-in");
                 tr.innerHTML = `
                     <td>${formatDate(r.date)}</td>
-                    <td class="mobile-hidden">${r.rider}</td>
-                    <td><span class="expense-type ${getCategoryClass(r.category)}">${r.category}</span></td>
-                    <td class="amount">${r.amount.toFixed(2)} PKR</td>
-                    <td class="mobile-hidden">${r.notes || ''}</td>
+                    <td><span class="expense-type ${getCategoryClass(r.type)}">${r.type}</span></td>
+                    <td class="amount ${r.type === 'Income' ? 'income' : 'expense'}">${r.amount.toFixed(2)} PKR</td>
+                    <td class="mobile-hidden">${r.description || ''}</td>
                     <td class="actions">
-                        <button class="btn btn-secondary btn-sm" onclick="editOfficeRow(${r.id})" title="Edit">
+                        <button class="btn btn-secondary btn-sm" onclick="editWalletRow(${r.id})" title="Edit">
                             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
                                 <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
                             </svg>
                         </button>
-                        <button class="btn btn-danger btn-sm" onclick="deleteOfficeRow(${r.id})" title="Delete">
+                        <button class="btn btn-danger btn-sm" onclick="deleteWalletRow(${r.id})" title="Delete">
                             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <polyline points="3 6 5 6 21 6"></polyline>
                                 <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
@@ -1569,96 +1843,92 @@
                         </button>
                     </td>
                 `;
-                officeTbody.appendChild(tr);
+                walletTbody.appendChild(tr);
             });
         }
 
-        async function addOfficeRow(){
+        async function addWalletRow(){
             const payload = {
-                date: document.getElementById('officeDate').value,
-                rider: document.getElementById('officeRider').value.trim(),
-                category: document.getElementById('officeCategory').value,
-                amount: parseFloat(document.getElementById('officeAmount').value || 0),
-                notes: document.getElementById('officeNotes').value.trim() || null
+                date: document.getElementById('walletDate').value,
+                type: document.getElementById('walletType').value,
+                amount: parseFloat(document.getElementById('walletAmount').value || 0),
+                description: document.getElementById('walletDescription').value.trim() || null
             };
             
-            if(!payload.date || !payload.rider){ 
-                alert("Please fill date & rider."); 
+            if(!payload.date){ 
+                alert("Please fill date."); 
                 return; 
             }
             
-            const {error} = await client.from(OFFICE_TABLE).insert(payload);
+            const {error} = await client.from(WALLET_TABLE).insert(payload);
             if(error){ 
                 alert("Insert error: " + error.message); 
                 return; 
             }
             
-            fetchOfficeRows();
-            resetOfficeForm();
+            fetchWalletRows();
+            resetWalletForm();
         }
 
-        function resetOfficeForm(){
+        function resetWalletForm(){
             setTodayDate();
-            document.getElementById('officeRider').value = "Manahil";
-            document.getElementById('officeCategory').value = "Office";
-            document.getElementById('officeAmount').value = "0";
-            document.getElementById('officeNotes').value = "";
+            document.getElementById('walletType').value = "Income";
+            document.getElementById('walletAmount').value = "0";
+            document.getElementById('walletDescription').value = "";
             
             // Reset button state if editing
-            addOfficeBtn.innerHTML = `
+            addWalletBtn.innerHTML = `
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <line x1="12" y1="5" x2="12" y2="19"></line>
                     <line x1="5" y1="12" x2="19" y2="12"></line>
                 </svg>
-                Add Expense
+                Add Entry
             `;
-            addOfficeBtn.onclick = addOfficeRow;
+            addWalletBtn.onclick = addWalletRow;
         }
 
-        async function deleteOfficeRow(id){
-            if(!confirm("Are you sure you want to delete this expense?")) return;
+        async function deleteWalletRow(id){
+            if(!confirm("Are you sure you want to delete this wallet entry?")) return;
             
-            const {error} = await client.from(OFFICE_TABLE).delete().eq('id', id);
+            const {error} = await client.from(WALLET_TABLE).delete().eq('id', id);
             if(error) alert(error.message);
             
-            fetchOfficeRows();
+            fetchWalletRows();
         }
 
         // Edit functionality
-        async function editOfficeRow(id){
-            const {data} = await client.from(OFFICE_TABLE).select("*").eq('id', id).single();
+        async function editWalletRow(id){
+            const {data} = await client.from(WALLET_TABLE).select("*").eq('id', id).single();
             if(!data) return;
             
-            document.getElementById('officeDate').value = data.date;
-            document.getElementById('officeRider').value = data.rider;
-            document.getElementById('officeCategory').value = data.category;
-            document.getElementById('officeAmount').value = data.amount;
-            document.getElementById('officeNotes').value = data.notes || '';
+            document.getElementById('walletDate').value = data.date;
+            document.getElementById('walletType').value = data.type;
+            document.getElementById('walletAmount').value = data.amount;
+            document.getElementById('walletDescription').value = data.description || '';
             
-            addOfficeBtn.innerHTML = `
+            addWalletBtn.innerHTML = `
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
                     <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
                 </svg>
-                Update Expense
+                Update Entry
             `;
-            addOfficeBtn.onclick = () => updateOfficeRow(id);
+            addWalletBtn.onclick = () => updateWalletRow(id);
         }
 
-        async function updateOfficeRow(id){
+        async function updateWalletRow(id){
             const payload = {
-                date: document.getElementById('officeDate').value,
-                rider: document.getElementById('officeRider').value,
-                category: document.getElementById('officeCategory').value,
-                amount: parseFloat(document.getElementById('officeAmount').value || 0),
-                notes: document.getElementById('officeNotes').value || null
+                date: document.getElementById('walletDate').value,
+                type: document.getElementById('walletType').value,
+                amount: parseFloat(document.getElementById('walletAmount').value || 0),
+                description: document.getElementById('walletDescription').value || null
             };
             
-            const {error} = await client.from(OFFICE_TABLE).update(payload).eq('id', id);
+            const {error} = await client.from(WALLET_TABLE).update(payload).eq('id', id);
             if(error) alert(error.message);
             
-            resetOfficeForm();
-            fetchOfficeRows();
+            resetWalletForm();
+            fetchWalletRows();
         }
 
         // Initialize
@@ -1667,9 +1937,9 @@
         resetBtn.onclick = resetRiderForm;
         refreshData.onclick = fetchRiderRows;
 
-        addOfficeBtn.onclick = addOfficeRow;
-        resetOfficeBtn.onclick = resetOfficeForm;
-        refreshOfficeData.onclick = fetchOfficeRows;
+        addWalletBtn.onclick = addWalletRow;
+        resetWalletBtn.onclick = resetWalletForm;
+        refreshWalletData.onclick = fetchWalletRows;
 
         refreshDashboard.onclick = fetchDashboardData;
 
@@ -1685,20 +1955,21 @@
         });
         applyFilters.addEventListener('click', fetchRiderRows);
 
-        filterOfficeDate.addEventListener('change', fetchOfficeRows);
-        filterOfficeRider.addEventListener('change', fetchOfficeRows);
-        filterOfficeType.addEventListener('change', fetchOfficeRows);
-        clearOfficeFilters.addEventListener('click', () => {
-            filterOfficeDate.value = '';
-            filterOfficeRider.value = '';
-            filterOfficeType.value = '';
-            fetchOfficeRows();
+        filterWalletDate.addEventListener('change', fetchWalletRows);
+        filterWalletType.addEventListener('change', fetchWalletRows);
+        clearWalletFilters.addEventListener('click', () => {
+            filterWalletDate.value = '';
+            filterWalletType.value = '';
+            fetchWalletRows();
         });
-        applyOfficeFilters.addEventListener('click', fetchOfficeRows);
+        applyWalletFilters.addEventListener('click', fetchWalletRows);
+
+        // Payment source change listener
+        paymentSource.addEventListener('change', checkWalletBalance);
 
         // Initial data fetch
         fetchRiderRows();
-        fetchOfficeRows();
+        fetchWalletRows();
         fetchDashboardData();
     </script>
 </body>
